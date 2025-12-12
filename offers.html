@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offers & Second Hand | NARU SON'S</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>NARU SON'S</h1>
+        <nav>
+            <a href="index.html">HOME</a>
+            <a href="offers.html">OFFERS & 2ND HAND</a>
+            <a href="#contact-section">CONTACT</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="offers-header">
+            <h2>DAILY, FESTIVAL & SPECIAL DEALS</h2>
+            <p>Grab the best deals on repairs, accessories, and check out our premium second-hand phone listings!</p>
+        </section>
+
+        <section id="offers-list" class="content-list">
+            <p>Loading the latest deals and second-hand phone listings...</p>
+        </section>
+
+        <section class="contact">
+            <h2>Want to Buy or Sell a Second Hand Phone?</h2>
+            <p>Visit our store or call us directly at 9996609176 to check availability.</p>
+        </section>
+    </main>
+
+    <footer id="contact-section">
+        <div class="contact-info">
+            <h4>Contact Us</h4>
+            <p>Email: narusons@email.com | Phone: 9996609176</p>
+            <p>Address: [Apni Shop Ka Poora Address Yahan Likhna]</p>
+        </div>
+        <a href="https://maps.google.com/?q=29.652181,76.873842" target="_blank" class="button location-btn">GET LOCATION (Maps)</a>
+        <p class="copyright">&copy; 2025 NARU SON'S. All rights reserved. | <a href="/admin/">Admin Login</a></p>
+    </footer>
+
+    <script>
+        async function loadDynamicContent() {
+            const offersList = document.getElementById('offers-list');
+            offersList.innerHTML = '';
+
+            try {
+                // Fetch index list of all offers created by Decap CMS
+                const response = await fetch('/_offers/index.json'); 
+                if (!response.ok) throw new Error('Failed to load offers index');
+                // The actual data might be nested, adjust as needed after first Netlify deployment
+                const data = await response.json(); 
+
+                data.forEach(item => {
+                    const isPhone = item.type === "Second Hand Phone";
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'content-item ' + (isPhone ? 'phone-listing' : 'offer-deal');
+
+                    // Stock Status Logic and Tags
+                    let stockTag = '';
+                    if (item.stock_status === 'IN_STOCK') stockTag = '<span class="tag stock-in">IN STOCK!</span>';
+                    if (item.stock_status === 'LOW_STOCK') stockTag = '<span class="tag stock-low">LOW STOCK!</span>';
+                    if (item.stock_status === 'OUT_OF_STOCK') stockTag = '<span class="tag stock-out">SOLD OUT</span>';
+
+                    // IMAGE UPLOAD for Phones
+                    const imageHtml = isPhone && item.image ? `<img src="${item.image}" alt="${item.title}" class="phone-image">` : '';
+
+                    itemDiv.innerHTML = `
+                        ${imageHtml}
+                        <h3>${item.title}</h3>
+                        <div class="description">${item.body}</div>
+                        <p class="price-detail"><strong>Price/Detail:</strong> ${item.price}</p>
+                        <span class="tag type-tag">${item.type}</span>
+                        ${stockTag}
+                        <a href="https://wa.me/9996609176" target="_blank" class="button whatsapp-btn small-btn">Enquire on WhatsApp</a>
+                    `;
+                    offersList.appendChild(itemDiv);
+                });
+            } catch (error) {
+                offersList.innerHTML = '<p>No current offers or second-hand phones listed. Check back soon!</p>';
+            }
+        }
+        loadDynamicContent();
+    </script>
+</body>
+                                                                                                           </html>
+                                                                                                           
