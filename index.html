@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NARU SON'S | Mobile Repair & Premium Gadgets</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>NARU SON'S</h1>
+        <nav>
+            <a href="index.html">HOME</a>
+            <a href="offers.html">OFFERS & 2ND HAND</a>
+            <a href="#contact-section">CONTACT</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h2>YOUR GO-TO MOBILE REPAIR HUB</h2>
+                <h1 class="main-heading">FAST REPAIRS & PREMIUM GADGETS</h1>
+                <a href="offers.html" class="button primary-btn">SEE TODAY'S OFFERS</a>
+            </div>
+        </section>
+
+        <section class="usp-section">
+            <h3>WHY CHOOSE NARU SON'S?</h3>
+            <div class="usp-grid">
+                <div class="usp-item">
+                    <h4>FAST REPAIRS</h4>
+                    <p>Minimum wait time, maximum efficiency. Hum jaldi aur bharosemand repair service dete hain.</p>
+                </div>
+                <div class="usp-item">
+                    <h4>PREMIUM GADGETS</h4>
+                    <p>Latest aur top-quality mobile accessories, chargers, aur premium refurbished gadgets.</p>
+                </div>
+                <div class="usp-item crypto-usp">
+                    <h4>CRYPTO PAYMENTS ACCEPTED</h4>
+                    <p>Ab aap Bitcoin ya anya crypto currencies se bhi payment kar sakte hain. Checkout par seedha INR mein convert ho jayega.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="quote-tool-section">
+            <h2>INSTANT REPAIR PRICE ESTIMATE</h2>
+            <div class="quote-form-container">
+                <div class="input-group">
+                    <label for="deviceType">Select Device Type:</label>
+                    <select id="deviceType" onchange="updateProblems()">
+                        <option value="">-- Select Device --</option>
+                        <option value="iPhone">iPhone</option>
+                        <option value="In Display Fingerprint Android">In Display Fingerprint Android</option>
+                        <option value="Other Devices">Other Devices</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="problemType">Select Problem:</label>
+                    <select id="problemType">
+                        <option value="">-- Select Problem --</option>
+                    </select>
+                </div>
+                <button onclick="getQuote()" class="button primary-btn estimate-btn">GET ESTIMATE</button>
+            </div>
+            <div id="result" class="quote-result-area"></div>
+        </section>
+        
+        <section class="crypto-live-chart">
+            <h2>LIVE CRYPTO PRICE TRACKER</h2>
+            <p>Check the latest rates before paying with Bitcoin or other digital currencies.</p>
+            <div class="crypto-widget-container">
+                <coingecko-coin-converter-widget coin-id="bitcoin" currency="inr" locale="en"></coingecko-coin-converter-widget>
+                <coingecko-coin-converter-widget coin-id="ethereum" currency="inr" locale="en"></coingecko-coin-converter-widget>
+            </div>
+        </section>
+        <script src="https://widgets.coingecko.com/coingecko-coin-converter-widget.js"></script>
+
+        <section class="testimonials-section">
+            <h2>WHAT OUR CUSTOMERS SAY</h2>
+            <div id="testimonials-slider" class="slider-container">
+                </div>
+        </section>
+
+        <section class="gadgets-showcase">
+            <h2>OUR PREMIUM GADGETS</h2>
+            <p>Check out our latest and exclusive accessories available in store.</p>
+        </section>
+    </main>
+
+    <footer id="contact-section">
+        <div class="contact-info">
+            <h4>Contact Us</h4>
+            <p>Email: narusons@email.com</p>
+            <p>Phone: 9996609176</p>
+            <p>Address: [Apni Shop Ka Poora Address Yahan Likhna]</p>
+        </div>
+        <a href="https://maps.google.com/?q=29.652181,76.873842" target="_blank" class="button location-btn"><i class="fa fa-map-marker"></i> GET LOCATION (Maps)</a>
+        <p class="copyright">&copy; 2025 NARU SON'S. All rights reserved. | <a href="/admin/">Admin Login</a></p>
+    </footer>
+
+    <script src="quotes.js"></script>
+    <script>
+        // Testimonials Loader Logic
+        async function loadTestimonials() {
+            try {
+                const response = await fetch('assets/data/testimonials.json');
+                const data = await response.json();
+                const slider = document.getElementById('testimonials-slider');
+                slider.innerHTML = ''; 
+
+                if (data.reviews && data.reviews.length > 0) {
+                    data.reviews.forEach(review => {
+                        const item = document.createElement('div');
+                        item.className = 'testimonial-item';
+                        item.innerHTML = `
+                            <p class="review-text">"${review.text}"</p>
+                            <h4 class="reviewer">- ${review.name}</h4>
+                        `;
+                        slider.appendChild(item);
+                    });
+                    // Note: Slider animation/logic requires a dedicated library or more CSS/JS
+                } else {
+                    slider.innerHTML = '<p>Trust is our priority. Add your first testimonial from the Admin Panel!</p>';
+                }
+            } catch (error) {
+                document.getElementById('testimonials-slider').innerHTML = '<p>Loading customer reviews failed. Please set up the Admin Panel correctly.</p>';
+            }
+        }
+        loadTestimonials();
+    </script>
+</body>
+</html>
