@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel | NARU SON'S</title>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <style>
+    /* Custom Styling for the Login Page to match your brand */
+    body { font-family: 'Poppins', sans-serif; background-color: #000000; color: #FFC300; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+    #netlify-identity-widget { padding: 30px; background-color: #333; border-radius: 8px; box-shadow: 0 0 10px rgba(255, 195, 0, 0.8); }
+    #netlify-identity-widget h1 { color: #FFC300; }
+  </style>
+</head>
+<body>
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <script>
+    if (window.netlifyIdentity) {
+      netlifyIdentity.on("init", user => {
+        if (!user) {
+          netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
+</body>
+</html>
