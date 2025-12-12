@@ -1,0 +1,42 @@
+backend:
+  name: git-gateway
+  branch: main # Agar tumhari branch 'master' hai toh yahan 'master' likhna
+  
+publish_mode: editorial_workflow # Optional: changes ko publish karne se pehle review kar sakte ho
+media_folder: "assets/uploads" 
+public_folder: "/assets/uploads" 
+
+collections:
+  # 1. TESTIMONIALS (For Home Page Slider)
+  - name: "content"
+    label: "Website Content"
+    files:
+      - file: "assets/data/testimonials.json" 
+        label: "Customer Testimonials"
+        name: "testimonials"
+        fields:
+          - label: "Reviews"
+            name: "reviews"
+            widget: "list"
+            fields:
+              - {label: "Reviewer Name", name: "name", widget: "string"}
+              - {label: "Review Text", name: "text", widget: "text"}
+
+  # 2. OFFERS & SECOND HAND PHONES (For Offers Page)
+  - name: "offers_and_phones"
+    label: "Offers & Second Hand Phones"
+    folder: "_offers" 
+    create: true
+    slug: "{{title}}"
+    fields:
+      - {label: "Title (Example: iPhone X for Sale / Diwali Offer)", name: "title", widget: "string", required: true}
+      - {label: "Type", name: "type", widget: "select", options: ["Special Offer", "Festival Discount", "Second Hand Phone"]}
+      - {label: "Description (Detailed Info)", name: "body", widget: "markdown", required: true}
+      - {label: "Price/Discount Details (e.g. ₹15,000 / Flat 20% Off)", name: "price", widget: "string", required: true}
+      
+      # SECOND HAND PHONE IMAGE UPLOAD
+      - {label: "Image (For Phones/Offers)", name: "image", widget: "image", required: false, media_folder: "assets/uploads"}
+
+      # LIVE STOCK STATUS
+      - {label: "Stock Status", name: "stock_status", widget: "select", options: ["IN_STOCK", "LOW_STOCK", "OUT_OF_STOCK"], default: "IN_STOCK", hint: "Set the inventory level."}
+      
